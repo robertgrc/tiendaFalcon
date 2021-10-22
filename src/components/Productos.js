@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+import {connect} from 'react-redux';
 
-export const Productos = ({productos, agregarProductoAlCarrito}) => {
+const Productos = ({productos, agregarProductoAlCarrito}) => {
 
     return (
         <div>
@@ -62,4 +63,10 @@ const Boton = styled.button`
     }
 `;
 
+const mapStateToProps = (estado) =>{
+    return{
+        productos:estado.productos
+    }
+}
 
+export default connect(mapStateToProps)(Productos);

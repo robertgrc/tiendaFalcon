@@ -6,17 +6,14 @@ import { Blog } from './components/Blog';
 import { Tienda } from './components/Tienda';
 import { Carrito } from './components/Carrito';
 import { useState } from 'react';
+import {Provider} from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers/tiendaReducer';
+
 
 const App = () => {
 
-    const productos = [
-        {id:1, nombre: 'Producto 1'},
-        {id:2, nombre: 'Producto 2'},
-        {id:3, nombre: 'Producto 3'},
-        {id:4, nombre: 'Producto 4'},
-        {id:5, nombre: 'Producto 5'},
-        {id:6, nombre: 'Producto 6'},
-    ];
+   
     const [carrito, cambiarCarrito] = useState([]);
 
     const agregarProductoAlCarrito = (idProductoAAgregar, nombre) =>{
@@ -57,8 +54,13 @@ const App = () => {
                 cambiarCarrito(nuevoCarrito)
         }
     }
+
+    const store = createStore(reducer);
+    console.log(store.getState());
+
     return (  
-        <Contenedor>      
+        <Provider store={store}>
+            <Contenedor>      
             <Menu>
                 <NavLink to="/">Inicio</NavLink>
                 <NavLink to="/blog">Blog</NavLink>
@@ -70,7 +72,7 @@ const App = () => {
                     <Route path="/blog" component={Blog} /> 
                     <Route path="/tienda"> 
                         <Tienda 
-                            productos= {productos}
+                            
                             agregarProductoAlCarrito={agregarProductoAlCarrito}
                         />
                     </Route>
@@ -83,6 +85,7 @@ const App = () => {
                 <Carrito  carrito={carrito}/>
             </aside>
         </Contenedor>
+        </Provider>
     );
 }
  
